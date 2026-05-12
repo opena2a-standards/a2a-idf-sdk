@@ -1,0 +1,2 @@
+Reason: initial-scaffold + MVP buildout. Remove before first npm publish.
+Re-evaluate once `npm pack` produces a publishable tarball and `@opena2a/a2a-idf` is announced on issue #1829.

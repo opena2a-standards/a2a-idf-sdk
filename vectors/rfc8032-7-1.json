@@ -1,0 +1,52 @@
+{
+  "source": "RFC 8032 §7.1 Test 1 keypair, composed with Envoys signature/v1 §13 vectors",
+  "envoysSpec": {
+    "url": "https://envoys.me/specs/signature/v1",
+    "version": "1.4.0",
+    "sha256": "5dcc855ecb4975e991584c2a1093fa866a027daf734166d2834a426bbc21b2e9",
+    "fetchedAt": "2026-05-11"
+  },
+  "keypair": {
+    "privateKeyHex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+    "publicKeyPemSpki": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo=\n-----END PUBLIC KEY-----\n",
+    "publicKeyRawHex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a"
+  },
+  "vectors": [
+    {
+      "name": "vec1-get-empty-body",
+      "method": "GET",
+      "path": "/api/health",
+      "body": "",
+      "keyid": "https://envoys.me/agents/test@rfc8032-vec1.example",
+      "created": 1714000000,
+      "nonce": "AAECAwQFBgcICQoLDA0ODw",
+      "expectedContentDigest": "sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:",
+      "expectedSignatureInput": "sig1=(\"@method\" \"@path\" \"content-digest\");keyid=\"https://envoys.me/agents/test@rfc8032-vec1.example\";created=1714000000;nonce=\"AAECAwQFBgcICQoLDA0ODw\"",
+      "expectedSignature": "sig1=:XUpjUHt36NbHgAZrQkFY2fSNUR19tgmRlGO1dBhaZDgBv4wb55qgJf2buv3wgnTYwtT+1sH2jzSbcgG6FLGKCA==:"
+    },
+    {
+      "name": "vec2-post-json-body",
+      "method": "POST",
+      "path": "/api/task",
+      "body": "{\"task\":\"summarize\",\"url\":\"https://example.com/doc\"}",
+      "keyid": "https://envoys.me/agents/test@rfc8032-vec1.example",
+      "created": 1714000060,
+      "nonce": "EBESExQVFhcYGRobHB0eHw",
+      "expectedContentDigest": "sha-256=:MKfdDhv01pOYGoZ8VKY5CNdevySMUL8MqvJxVJaaWu0=:",
+      "expectedSignatureInput": "sig1=(\"@method\" \"@path\" \"content-digest\");keyid=\"https://envoys.me/agents/test@rfc8032-vec1.example\";created=1714000060;nonce=\"EBESExQVFhcYGRobHB0eHw\"",
+      "expectedSignature": "sig1=:i5tKcOHKhRTCztR2cazuzNAg9rPiRf47MKTOGve92Rs43gNmltuN5LVScedR6C08MGsQykMc7txJ21KCG8SEBQ==:"
+    },
+    {
+      "name": "vec3-post-empty-object",
+      "method": "POST",
+      "path": "/api/echo",
+      "body": "{}",
+      "keyid": "https://envoys.me/agents/test@rfc8032-vec1.example",
+      "created": 1714000120,
+      "nonce": "ICEiIyQlJicoKSorLC0uLw",
+      "expectedContentDigest": "sha-256=:RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=:",
+      "expectedSignatureInput": "sig1=(\"@method\" \"@path\" \"content-digest\");keyid=\"https://envoys.me/agents/test@rfc8032-vec1.example\";created=1714000120;nonce=\"ICEiIyQlJicoKSorLC0uLw\"",
+      "expectedSignature": "sig1=:m2besJKk6Q0MIwFoTENobvvHxFan1fUTv7bzY4EB6OjfIlktqwKa7r/Ab0tDDWFGjQ0CbALgvWGcQfzDr/GeBQ==:"
+    }
+  ]
+}

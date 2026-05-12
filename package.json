@@ -1,0 +1,58 @@
+{
+  "name": "@opena2a/a2a-idf",
+  "version": "0.1.0",
+  "description": "Reference TypeScript SDK for A2A-IDF (Agent-to-Agent Identity Framework) — sign/verify RFC 9421, resolve keyids, validate verification levels 0/1/2, attestations, and delegation chains.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pack:check": "npm pack --dry-run --json"
+  },
+  "keywords": [
+    "a2a",
+    "a2a-idf",
+    "agent-identity",
+    "rfc9421",
+    "ed25519",
+    "did",
+    "agent2agent",
+    "opena2a"
+  ],
+  "author": "OpenA2A contributors",
+  "license": "Apache-2.0",
+  "homepage": "https://opena2a.org/identity",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opena2a-org/a2a-idf-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/opena2a-org/a2a-idf-sdk/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@noble/ed25519": "^2.2.3",
+    "@noble/hashes": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
