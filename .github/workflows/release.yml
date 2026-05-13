@@ -1,0 +1,66 @@
+name: Release
+
+# Publishes @opena2a/a2a-idf to npm via Trusted Publishing (OIDC).
+# No long-lived NPM_TOKEN — GitHub Actions exchanges its OIDC token with npm.
+# One-time setup on npmjs.com: opena2a org settings → Trusted Publishers →
+# add entry for @opena2a/a2a-idf with org=opena2a-org, repo=a2a-idf-sdk,
+# workflow filename=release.yml, environment=blank.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Resolve package name and version
+        id: pkg
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if version already published
+        id: gate
+        run: |
+          if npm view "${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }}" version 2>/dev/null; then
+            echo "Version ${{ steps.pkg.outputs.version }} already on npm; skipping publish."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to npm via OIDC
+        if: steps.gate.outputs.publish == 'true'
+        run: npm publish --provenance --access public
+
+      - name: Verify provenance attestation
+        if: steps.gate.outputs.publish == 'true'
+        run: |
+          sleep 15
+          npm view "${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }}" dist.attestations --json
