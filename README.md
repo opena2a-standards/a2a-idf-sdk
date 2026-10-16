@@ -90,7 +90,9 @@ This SDK byte-matches the [Envoys §13 test vectors](https://envoys.me/specs/sig
 
 See `test/rfc9421.test.ts`. The keypair is RFC 8032 §7.1 Test 1, fixed for reproducibility across implementations.
 
-## Verification levels
+## Usage
+
+### Verification levels
 
 ```ts
 import { level1, level2 } from "@opena2a/a2a-idf";
@@ -117,7 +119,7 @@ const l2 = await level2({
 });
 ```
 
-## Delegation chains
+### Delegation chains
 
 ```ts
 import { verifyDelegationChain } from "@opena2a/a2a-idf";
@@ -134,7 +136,7 @@ if (r.ok) {
 
 Chain rules enforced: first link is a root (signed by the originating delegator); each subsequent link carries the previous link's `previousSignature`; scope narrows monotonically; expiry never widens; depth ≤ `maxDepth`; signing keys resolve through the same `resolveKey` callback.
 
-## Dual-shape keyid resolution
+### Dual-shape keyid resolution
 
 `resolveKeyid()` dispatches on `Content-Type`:
 
@@ -157,6 +159,6 @@ These are scoped for `v0.2` and onward — see [`A2A_IDF_CAMPAIGN.md`](https://g
 
 `v0.1` — MVP. Not yet published to npm. All acceptance criteria from the [A2A-IDF SDK pickup doc](https://github.com/opena2a-org/a2a-idf-conformance) are met locally; npm publication follows the canonical-suite composition fixture (`fixtures/composition/aim-did-rfc9421/signature-alone.json`) landing in `opena2a-org/a2a-idf-conformance` and an `opena2a.org/identity` page going live.
 
-## Contributing
+## Documentation
 
-The conformance suite ([`opena2a-org/a2a-idf-conformance`](https://github.com/opena2a-org/a2a-idf-conformance)) is the canonical home for cross-implementation byte-match fixtures. SDK PRs that don't pair with a fixture update are still welcome, but cross-impl behavior changes belong in the suite first.
+- [Contributing](docs/CONTRIBUTING.md): where byte-match fixtures and cross-implementation behavior changes are proposed.
