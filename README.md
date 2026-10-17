@@ -153,7 +153,7 @@ Both shapes return the same 32-byte raw Ed25519 key, so callers can pass it dire
 - Browser bundle (Node 24+ only at v0.1).
 - CLI verb wrappers.
 
-These are scoped for `v0.2` and onward — see [`A2A_IDF_CAMPAIGN.md`](https://github.com/opena2a-org/a2a-idf-sdk/blob/main/CAMPAIGN.md) for the trajectory.
+These are scoped for `v0.2` and onward.
 
 ## Status
 
