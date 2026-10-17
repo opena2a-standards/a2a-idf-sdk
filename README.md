@@ -80,7 +80,7 @@ if (!result.ok) {
 
 ## Cross-implementation byte-match
 
-This SDK byte-matches the [Envoys §13 test vectors](https://envoys.me/specs/signature/v1) (spec v1.4.0, sha256 `5dcc855e…c21b2e9`):
+This SDK byte-matches the Envoys signature/v1 §13 test vectors (spec v1.4.0, sha256 `5dcc855e…c21b2e9`). The vectors are vendored in [`vectors/rfc8032-7-1.json`](vectors/rfc8032-7-1.json), whose `envoysSpec` field records the specification URL, version, sha256 and fetch date.
 
 | Vector | Method | Path | Body | Status |
 |---|---|---|---|---|
@@ -88,7 +88,7 @@ This SDK byte-matches the [Envoys §13 test vectors](https://envoys.me/specs/sig
 | 2 | POST | `/api/task` | summarize JSON | ✓ matches `i5tKcOHKhRTCztR2cazuzNAg9rPiRf47MKTOGve92Rs43gNmltuN5LVScedR6C08MGsQykMc7txJ21KCG8SEBQ==` |
 | 3 | POST | `/api/echo` | `{}` | ✓ matches `m2besJKk6Q0MIwFoTENobvvHxFan1fUTv7bzY4EB6OjfIlktqwKa7r/Ab0tDDWFGjQ0CbALgvWGcQfzDr/GeBQ==` |
 
-See `test/rfc9421.test.ts`. The keypair is RFC 8032 §7.1 Test 1, fixed for reproducibility across implementations.
+See [`test/rfc9421.test.ts`](test/rfc9421.test.ts). The keypair is RFC 8032 §7.1 Test 1, fixed for reproducibility across implementations.
 
 ## Usage
 
