@@ -4,7 +4,7 @@ Reference TypeScript SDK for **A2A-IDF** — the Agent-to-Agent Identity Framewo
 
 - **Spec:** A2A-IDF (PR #1496)
 - **Conformance suite:** [`opena2a-org/a2a-idf-conformance`](https://github.com/opena2a-org/a2a-idf-conformance)
-- **Reference implementation:** [AIM](https://github.com/opena2a-org/aim)
+- **Reference implementation:** [AIM](https://github.com/opena2a-org/agent-identity-management)
 - **Identity home:** https://opena2a.org/identity
 - **License:** Apache-2.0
 - **Runtime:** Node.js ≥ 24
