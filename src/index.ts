@@ -1,4 +1,4 @@
-// @opena2a/a2a-idf — reference TypeScript SDK for A2A-IDF (PR #1496).
+// @opena2a/a2a-idf: TypeScript SDK for A2A-IDF (proposed in a2aproject/A2A#1496).
 // Apache 2.0. https://opena2a.org/identity
 
 export {

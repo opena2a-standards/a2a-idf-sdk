@@ -1,7 +1,7 @@
 {
   "name": "@opena2a/a2a-idf",
   "version": "0.1.0",
-  "description": "Reference TypeScript SDK for A2A-IDF (Agent-to-Agent Identity Framework) — sign/verify RFC 9421, resolve keyids, validate verification levels 0/1/2, attestations, and delegation chains.",
+  "description": "TypeScript SDK for A2A-IDF (Agent-to-Agent Identity Framework): sign and verify RFC 9421 requests, resolve keyids, validate verification levels 0/1/2, attestations, and delegation chains.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
