@@ -34,13 +34,61 @@ const section = (markdown: string, heading: string): string => {
 };
 
 describe("README", () => {
-  it("links the reference implementation to the AIM repository", () => {
-    const line = readme
-      .split("\n")
-      .find((l) => l.includes("**Reference implementation:**"));
-    expect(line).toBeDefined();
-    const targets = [...(line ?? "").matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1]);
-    expect(targets).toEqual(["https://github.com/opena2a-org/agent-identity-management"]);
+  // A line may name a reference implementation only if the same line cites a
+  // conformance run: a2a-idf-conformance, then a release tag, then
+  // "(commit <sha>)". The suite name may be a link, and the tag and the sha may
+  // be in backticks. An unfilled placeholder such as {tag} or {sha} is not a
+  // citation.
+  const namesReferenceImplementation = (line: string): boolean =>
+    /\breference[\s-]+implementations?\b/i.test(line);
+
+  const citesConformanceRun = (line: string): boolean =>
+    /a2a-idf-conformance\S*\s+`?v?\d+(?:\.\d+){1,2}(?:-[0-9A-Za-z.]+)?`?\s+\(commit\s+`?[0-9a-f]{7,40}`?\)/.test(
+      line,
+    );
+
+  const referenceLines = (markdown: string): string[] =>
+    markdown.split("\n").filter(namesReferenceImplementation);
+
+  const uncitedReferenceLines = (markdown: string): string[] =>
+    referenceLines(markdown).filter((l) => !citesConformanceRun(l));
+
+  it("names a reference implementation only on a line that cites a conformance run with a tag and a commit, and names none today", () => {
+    expect(uncitedReferenceLines(readme)).toEqual([]);
+    // No README line names one today. The change that adds a line citing a
+    // conformance run updates this expectation with it.
+    expect(referenceLines(readme)).toEqual([]);
+  });
+
+  const aim =
+    "- **Reference implementation:** [AIM](https://github.com/opena2a-org/agent-identity-management)";
+  const sha = "0123456789abcdef0123456789abcdef01234567";
+
+  const uncited: [string, string][] = [
+    ["no conformance run", aim],
+    [
+      "the placeholders left unfilled",
+      `${aim}: passes a2a-idf-conformance {tag} (commit {sha}) as a required check, {date}.`,
+    ],
+    ["a tag and no commit", `${aim}: passes a2a-idf-conformance v0.1.0 as a required check, 2026-11-13.`],
+    ["a commit and no tag", `${aim}: passes a2a-idf-conformance (commit ${sha}) as a required check, 2026-11-13.`],
+  ];
+
+  for (const [name, line] of uncited) {
+    it(`rejects a reference-implementation line with ${name}`, () => {
+      expect(uncitedReferenceLines(line)).toEqual([line]);
+    });
+  }
+
+  it("rejects a reference-implementation line whose conformance run is cited on the next line", () => {
+    const markdown = `${aim}\n  passes a2a-idf-conformance v0.1.0 (commit ${sha}) as a required check, 2026-11-13.`;
+    expect(uncitedReferenceLines(markdown)).toEqual([aim]);
+  });
+
+  it("accepts a reference-implementation line that cites a2a-idf-conformance with a tag and a commit", () => {
+    const line = `${aim}: passes a2a-idf-conformance v0.1.0 (commit ${sha}) as a required check, 2026-11-13.`;
+    expect(referenceLines(line)).toEqual([line]);
+    expect(uncitedReferenceLines(line)).toEqual([]);
   });
 });
 
